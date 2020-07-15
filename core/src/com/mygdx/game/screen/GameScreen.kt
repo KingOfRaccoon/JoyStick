@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.mygdx.game.MyGame
 import com.mygdx.game.actors.Player
 import com.mygdx.game.tools.Joystick
-import com.mygdx.game.tools.MyInputProcessor
 import com.mygdx.game.tools.Point2D
 
 class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
@@ -26,6 +26,7 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     }
 
     override fun render(delta: Float) {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         gameUpdate()
         myGame.batch.begin()
         gameRender(myGame.batch)
@@ -49,12 +50,35 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     }
     fun loadActors(){
         joystick = Joystick(myGame.circle, myGame.circle, (myGame.height/3).toFloat())
-        player = Player(myGame.actor, Point2D((myGame.weight/2).toFloat(), (myGame.height/2).toFloat()), 10f, (myGame.actor.height/2).toFloat(), 20f)
+        player = Player(myGame.actor, Point2D((myGame.weight/2).toFloat(), (myGame.height/2).toFloat()), 20f).
+        apply { speed = 10f }
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         multiTouch(screenX.toFloat(), (Gdx.graphics.height - screenY).toFloat(), false, pointer)
         return false
+    }
+    override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
+        multiTouch(screenX.toFloat(), (Gdx.graphics.height - screenY).toFloat(), true, pointer)
+        return false
+    }
+    override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        multiTouch(screenX.toFloat(), (Gdx.graphics.height - screenY).toFloat(), true, pointer)
+        return false
+    }
+    fun gameUpdate(){
+        player.move(joystick.direction)
+        player.update()
+    }
+    fun gameRender(batch: SpriteBatch){
+        player.draw(batch)
+        joystick.draw(batch)
+    }
+
+    fun multiTouch(x:Float, y:Float, isDownTouch: Boolean, pointer: Int){
+        for (i in 0..5){
+            joystick.update(x, y, isDownTouch,pointer)
+        }
     }
 
     override fun mouseMoved(screenX: Int, screenY: Int): Boolean {
@@ -72,33 +96,7 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     override fun keyUp(keycode: Int): Boolean {
         TODO("Not yet implemented")
     }
-
-    override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
-        multiTouch(screenX.toFloat(), (Gdx.graphics.height - screenY).toFloat(), true, pointer)
-        return false
-    }
-
     override fun keyDown(keycode: Int): Boolean {
         TODO("Not yet implemented")
     }
-
-    override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        multiTouch(screenX.toFloat(), (Gdx.graphics.height - screenY).toFloat(), true, pointer)
-        return false
-    }
-    fun gameUpdate(){
-        player.direction = joystick.direction
-        player.update()
-    }
-    fun gameRender(batch: SpriteBatch){
-        player.draw(batch)
-        joystick.draw(batch)
-    }
-
-    fun multiTouch(x:Float, y:Float, isDownTouch: Boolean, pointer: Int){
-        for (i in 0..5){
-            joystick.update(x, y, isDownTouch,pointer)
-        }
-    }
-
 }

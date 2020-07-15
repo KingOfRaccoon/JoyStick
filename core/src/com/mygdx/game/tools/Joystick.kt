@@ -4,17 +4,20 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import javax.management.Query.or
+import kotlin.math.asin
+import kotlin.math.sin
 
 class Joystick(imgCircle: Texture, imgStick: Texture,size : Float) {
     var textureCircle: Texture = imgCircle
     var textureStick : Texture = imgStick
-    var point2D = Point2D((Gdx.graphics.width -(Gdx.graphics.height/3)/2+(Gdx.graphics.height/3)/4).toFloat(), ((Gdx.graphics.height/3)/2+(Gdx.graphics.height/3)/4).toFloat())
+    var point2D = Point2D(((Gdx.graphics.height/3)/1.5).toFloat(), ((Gdx.graphics.height/3)/2+(Gdx.graphics.height/3)/4).toFloat())
     var radCircle : Float = size/2
     var radStick : Float = radCircle/2
     val boundsCicrle : Circle = Circle(radCircle, point2D)
     var boundsStick  : Circle = Circle(radStick, point2D)
     var direction = Point2D(0f,0f)
     var pointer = -1
+    var angle = 0.0
 
     fun draw(batch: SpriteBatch){
         batch.draw(textureCircle, boundsCicrle.point.getX()-radCircle, boundsCicrle.point.getY()-radCircle, radCircle*2, radCircle*2)
@@ -36,6 +39,7 @@ class Joystick(imgCircle: Texture, imgStick: Texture,size : Float) {
         var dy = boundsCicrle.point.getY() - boundsStick.point.getY()
         var dist = Math.sqrt((dx*dx + dy*dy).toDouble()).toFloat()
         direction = Point2D(-(dx/dist), -(dy/dist))
+        angle = sin((dy/dist).toDouble())
     }
     fun returnStick(){
         boundsStick.point.setPoint(boundsCicrle.point)

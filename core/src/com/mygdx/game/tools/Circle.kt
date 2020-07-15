@@ -3,8 +3,7 @@ package com.mygdx.game.tools
 class Circle(radius: Float, point: Point2D){
     var radius = radius
     var point = point
-
-
+    
     fun isContains(point2D: Point2D): Boolean {
         var dx = point.getX() - point2D.getX()
         var dy = point.getY() - point2D.getY()

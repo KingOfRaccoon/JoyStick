@@ -20,8 +20,4 @@ class Point2D(x:Float, y:Float) {
         this.x = point2D.x
         this.y = point2D.y
     }
-    fun setXAndY(x:Float, y: Float){
-        this.x = x
-        this.y = y
-    }
 }
