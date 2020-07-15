@@ -4,12 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.mygdx.game.MyGame
 import com.mygdx.game.tools.Point2D
-import java.text.FieldPosition
-import kotlin.math.PI
-import kotlin.math.acos
-import kotlin.math.asin
 
 class Player(texture: Texture, position: Point2D, health:Float):Actors(texture, position){
     var health = health

@@ -21,7 +21,7 @@ class MyGame: Game() {
         height = Gdx.graphics.height
         img = Texture("badlogic.jpg")
         circle = Texture("circle1.png")
-        actor = Texture("round.png")
+        actor = Texture("android.jpg")
         setScreen(GameScreen(this))
     }
 
