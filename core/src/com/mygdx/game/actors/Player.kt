@@ -9,6 +9,7 @@ import com.mygdx.game.tools.Point2D
 class Player(texture: Texture, position: Point2D, health:Float):Actors(texture, position){
     var health = health
     var radius = texture.height/2.toFloat()
+    var myItem = mutableListOf<Item>()
     override fun draw(batch: SpriteBatch) {
         var image = TextureRegion(img)
         batch.draw(image, position.getX(), position.getY(),

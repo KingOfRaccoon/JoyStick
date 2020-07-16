@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.mygdx.game.MyGame
+import com.mygdx.game.actors.Item
 import com.mygdx.game.actors.Player
 import com.mygdx.game.tools.Joystick
 import com.mygdx.game.tools.Point2D
@@ -15,6 +16,7 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
 
     lateinit var joystick : Joystick
     lateinit var player: Player
+    var items: MutableList<Item> = mutableListOf()
 
     override fun hide() {
         TODO("Not yet implemented")
@@ -52,6 +54,7 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
         joystick = Joystick(myGame.circle, myGame.circle, (myGame.height/3).toFloat())
         player = Player(myGame.actor, Point2D((myGame.weight/2).toFloat(), (myGame.height/2).toFloat()), 20f).
         apply { speed = 10f }
+        items.add(Item(Texture("coin.png"), "Coin", Point2D(myGame.weight/4*3.toFloat(), myGame.height/2.toFloat()  )))
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
@@ -69,15 +72,26 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     fun gameUpdate(){
         player.move(joystick.direction)
         player.update()
+        colision()
     }
     fun gameRender(batch: SpriteBatch){
         player.draw(batch)
         joystick.draw(batch)
+        items.forEach { it.draw(batch) }
     }
 
     fun multiTouch(x:Float, y:Float, isDownTouch: Boolean, pointer: Int){
         for (i in 0..5){
             joystick.update(x, y, isDownTouch,pointer)
+        }
+    }
+    fun colision(){
+        for (i in 0 until items.size){
+            if (items[i].bounds.overLaps(player.bounds)){
+                player.myItem.add(items[i])
+                items.removeAt(i)
+                break
+            }
         }
     }
 
