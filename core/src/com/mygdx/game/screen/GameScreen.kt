@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.mygdx.game.MyGame
@@ -12,11 +13,20 @@ import com.mygdx.game.actors.Player
 import com.mygdx.game.tools.Joystick
 import com.mygdx.game.tools.Point2D
 
+
 class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
 
     lateinit var joystick : Joystick
     lateinit var player: Player
+    lateinit var camera: OrthographicCamera
+
     var items: MutableList<Item> = mutableListOf()
+
+    //camera = OrthographicCamera(myGame.weight.toFloat(), myGame.height.toFloat())
+    init
+    {
+        camera = OrthographicCamera(myGame.weight.toFloat(), myGame.height.toFloat())
+    }
 
     override fun hide() {
         TODO("Not yet implemented")
@@ -30,6 +40,7 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         gameUpdate()
+        //myGame.batch.setProjectionMatrix(camera.combined);
         myGame.batch.begin()
         gameRender(myGame.batch)
         myGame.batch.end()
