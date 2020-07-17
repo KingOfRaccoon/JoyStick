@@ -2,9 +2,11 @@ package com.mygdx.game.actors
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.mygdx.game.tools.Point2D
+import sun.awt.image.GifImageDecoder
 
 class Player(texture: Texture, position: Point2D, health:Float):Actors(texture, position){
     var health = health

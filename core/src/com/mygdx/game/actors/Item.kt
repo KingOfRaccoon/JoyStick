@@ -13,4 +13,12 @@ class Item(var texture: Texture, var name: String, point2D: Point2D): Actors(tex
     override fun update() {
         TODO("Not yet implemented")
     }
+
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+        return if (other is Item)
+            this.name == other.name
+        else
+            false
+    }
 }

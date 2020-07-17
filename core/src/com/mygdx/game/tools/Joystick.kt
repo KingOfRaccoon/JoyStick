@@ -3,8 +3,6 @@ package com.mygdx.game.tools
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import javax.management.Query.or
-import kotlin.math.asin
 import kotlin.math.sin
 
 class Joystick(imgCircle: Texture, imgStick: Texture,size : Float) {

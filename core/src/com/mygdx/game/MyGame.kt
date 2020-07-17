@@ -4,12 +4,12 @@ import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.mygdx.game.screen.GameScreen
+import com.mygdx.game.screen.MainScreen
 
 class MyGame: Game() {
-    lateinit var img: Texture // текстура
     lateinit var batch: SpriteBatch // отрисовчик
-    lateinit var circle: Texture
+    lateinit var joy_back: Texture
+    lateinit var joy_stick : Texture
     lateinit var actor: Texture
     var weight = 0
     var height = 0
@@ -19,16 +19,16 @@ class MyGame: Game() {
         batch = SpriteBatch()
         weight = Gdx.graphics.width
         height = Gdx.graphics.height
-        img = Texture("badlogic.jpg")
-        circle = Texture("circle1.png")
+        joy_back = Texture("jo_back.png")
+        joy_stick = Texture("jo_face.png")
         actor = Texture("android.jpg")
-        setScreen(GameScreen(this))
+        setScreen(MainScreen(this))
     }
 
     override fun dispose() {//выгрузка ресурсов
         batch.dispose() // выгрузка из памяти отрисовчика
-        img.dispose() // выгрузка из памяти текстуры
-        circle.dispose()
+        joy_stick.dispose()
+        joy_back.dispose()
         actor.dispose()
     }
 }
