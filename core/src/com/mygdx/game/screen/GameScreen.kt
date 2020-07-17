@@ -23,16 +23,15 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     var items: MutableList<Item> = mutableListOf()
 
     //camera = OrthographicCamera(myGame.weight.toFloat(), myGame.height.toFloat())
-    init
-    {
-        camera = OrthographicCamera(myGame.weight.toFloat(), myGame.height.toFloat())
-    }
+
+
 
     override fun hide() {
         TODO("Not yet implemented")
     }
 
     override fun show(){
+        camera = OrthographicCamera(myGame.weight.toFloat()/2, myGame.height.toFloat()/2)
         Gdx.input.inputProcessor = this
         loadActors()
     }
@@ -40,7 +39,9 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         gameUpdate()
-        //myGame.batch.setProjectionMatrix(camera.combined);
+        camera.update()
+        myGame.batch.setProjectionMatrix(camera.combined);
+
         myGame.batch.begin()
         gameRender(myGame.batch)
         myGame.batch.end()
@@ -83,6 +84,9 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     fun gameUpdate(){
         player.move(joystick.direction)
         player.update()
+        camera.position.x = player.position.getX()
+        camera.position.y = player.position.getY()
+
         colision()
     }
     fun gameRender(batch: SpriteBatch){
