@@ -11,7 +11,7 @@ class Joystick(imgCircle: Texture, imgStick: Texture,size : Float) {
     var textureCircle: Texture = imgCircle
     var textureStick : Texture = imgStick
     var point2D = Point2D(((Gdx.graphics.height/3)/1.5).toFloat(), ((Gdx.graphics.height/3)/2+(Gdx.graphics.height/3)/4).toFloat())
-    var radCircle : Float = size/2
+    var radCircle : Float = size/8 //  уменьшил размер джостика
     var radStick : Float = radCircle/2
     val boundsCicrle : Circle = Circle(radCircle, point2D)
     var boundsStick  : Circle = Circle(radStick, point2D)

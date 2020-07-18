@@ -14,11 +14,16 @@ import com.mygdx.game.tools.Joystick
 import com.mygdx.game.tools.Point2D
 
 
-class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
+public class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
 
     lateinit var joystick : Joystick
     lateinit var player: Player
-    lateinit var camera: OrthographicCamera//------------
+    lateinit var camera: OrthographicCamera // камера
+
+    lateinit var game_joystic_distance :Point2D
+    /**
+     * создаю объект <game_joystic_distance>, который хранит разницу расстояния джостика и игрока
+     ** в дальнейшем используется для установки позиции джостика оттносительно игроку*/
 
     var items: MutableList<Item> = mutableListOf()
 
@@ -28,20 +33,48 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     }
 
     override fun show(){
-        camera = OrthographicCamera(myGame.weight.toFloat()/2, myGame.height.toFloat()/2)//------
+        camera = OrthographicCamera(myGame.weight.toFloat()/2, myGame.height.toFloat()/2)
+        // инициализация камеры
+
         Gdx.input.inputProcessor = this
+
         loadActors()
+        game_joystic_distance = Point2D(
+                x = player.position.getX() - joystick.point2D.getX(),
+                y = player.position.getY() - joystick.point2D.getY())
     }
+
+    fun gameUpdate(){
+        player.move(joystick.direction)
+        player.update()
+
+        joystick.point2D.setX(player.position.getX() - game_joystic_distance.getX())//=====
+        joystick.point2D.setY(player.position.getY() - game_joystic_distance.getY())//=====
+        camera.position.x = player.position.getX() // камера следит
+        camera.position.y = player.position.getY() // за игроком
+
+        colision()
+    }
+
+    fun gameRender(batch: SpriteBatch){
+        player.draw(batch)
+        joystick.draw(batch)
+
+        items.forEach { it.draw(batch) }
+    }
+
+
 
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        gameUpdate()
-        camera.update()//------------------
-        myGame.batch.projectionMatrix = camera.combined;//---------------
+
+        camera.update() // обновление камеры
+        myGame.batch.projectionMatrix = camera.combined
 
         myGame.batch.begin()
         gameRender(myGame.batch)
         myGame.batch.end()
+        gameUpdate()
     }
 
     override fun pause() {
@@ -51,7 +84,6 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     override fun resume() {
         TODO("Not yet implemented")
     }
-
     override fun resize(width: Int, height: Int) {
 
     }
@@ -64,8 +96,9 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
         player = Player(myGame.actor, Point2D((myGame.weight/2).toFloat(), (myGame.height/2).toFloat()), 20f).
         apply { speed = 10f }
         items.add(Item(Texture("coin.png"), "Coin", Point2D(myGame.weight/4*3.toFloat(), myGame.height/2.toFloat()  )))
-    }
 
+
+    }
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         multiTouch(screenX.toFloat(), (Gdx.graphics.height - screenY).toFloat(), false, pointer)
         return false
@@ -77,19 +110,6 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         multiTouch(screenX.toFloat(), (Gdx.graphics.height - screenY).toFloat(), true, pointer)
         return false
-    }
-    fun gameUpdate(){
-        player.move(joystick.direction)
-        player.update()
-        camera.position.x = player.position.getX() //----------------
-        camera.position.y = player.position.getY() //----------------
-
-        colision()
-    }
-    fun gameRender(batch: SpriteBatch){
-        player.draw(batch)
-        joystick.draw(batch)
-        items.forEach { it.draw(batch) }
     }
 
     fun multiTouch(x:Float, y:Float, isDownTouch: Boolean, pointer: Int){

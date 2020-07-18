@@ -16,6 +16,7 @@ class Point2D(x:Float, y:Float) {
     }
     fun getX(): Float = x
     fun getY(): Float = y
+
     fun setPoint(point2D: Point2D){
         this.x = point2D.x
         this.y = point2D.y

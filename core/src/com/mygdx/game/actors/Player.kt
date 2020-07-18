@@ -18,7 +18,8 @@ class Player(texture: Texture, position: Point2D, health:Float):Actors(texture, 
                 1f, 1f, getAngle())
     }
 
-    override fun update() {
+    override fun update()
+    {
         if (position.getX() + radius > Gdx.graphics.width)
             position.setX(Gdx.graphics.width-radius)
         if (position.getX() < 0)
