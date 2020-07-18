@@ -21,7 +21,7 @@ class MyGame: Game() {
         height = Gdx.graphics.height
         joy_back = Texture("jo_back.png")
         joy_stick = Texture("jo_face.png")
-        actor = Texture("android.jpg")
+        actor = Texture("persUp.png")
         setScreen(MainScreen(this))
     }
 

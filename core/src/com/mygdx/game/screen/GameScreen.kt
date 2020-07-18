@@ -9,18 +9,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.mygdx.game.MyGame
 import com.mygdx.game.actors.Item
 import com.mygdx.game.actors.Player
+import com.mygdx.game.tools.*
 import com.mygdx.game.tools.Any
 import com.mygdx.game.tools.Any.items
-import com.mygdx.game.tools.Button
-import com.mygdx.game.tools.Joystick
-import com.mygdx.game.tools.Point2D
+import com.mygdx.game.tools.Map
+import kotlin.math.PI
+import kotlin.math.cos
 
 class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
-
     lateinit var joystick : Joystick
     lateinit var player: Player
     lateinit var button: Button
-
+    var map = Map()
 
     override fun hide() {
         Any.playerPosition = player.position
@@ -56,9 +56,11 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
         TODO("Not yet implemented")
     }
     fun loadActors(){
+        map.createMap()
         joystick = Joystick(myGame.joy_back, myGame.joy_stick, (myGame.height/3).toFloat())
+
         if (Any.playerPosition == null){
-        player = Player(myGame.actor, Point2D((myGame.weight/2).toFloat(), (myGame.height/2).toFloat()), 20f).apply{ speed = 10f }}
+        player = Player(myGame.actor, Point2D(myGame.weight/2.toFloat(), myGame.height/2.toFloat()), 20f).apply{ speed = 10f }}
         else{
             player = Player(myGame.actor, Any.playerPosition!!, 20f).apply { speed = 10f}
         }
@@ -88,6 +90,7 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
         }
     }
     fun gameRender(batch: SpriteBatch){
+        map.draw(batch)
         player.draw(batch)
         joystick.draw(batch)
         items.forEach { it.draw(batch) }

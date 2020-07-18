@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.mygdx.game.MyGame
 import com.mygdx.game.tools.Button
+import com.mygdx.game.tools.Map
 import com.mygdx.game.tools.Point2D
 
 import com.mygdx.game.tools.RectangleButton
@@ -61,7 +62,7 @@ class MainScreen(var myGame: MyGame):Screen, InputProcessor {
         soundButton = Button(Texture("sounds.png"),
                 Point2D(myGame.weight - Texture("sounds.png").width*2.toFloat(),
                         Texture("sounds.png").height*2.toFloat()))
-        backTexture = Texture("matrix.jpg")
+        backTexture = Texture("photo.jpg")
         backSprite = Sprite(backTexture)
         backSprite.setSize(myGame.weight.toFloat(), myGame.height.toFloat())
         backSprite.setPosition(0f, 0f)
@@ -72,11 +73,13 @@ class MainScreen(var myGame: MyGame):Screen, InputProcessor {
             exitButton.onClick(x, y, isDownTouch, pointer)
             soundButton.update(x, y, isDownTouch, pointer)
         }
-        if (isDownTouch){
+        if (startButton.click)
             startButton.img = Texture("start_press.png")
+        if (soundButton.click)
             soundButton.img = Texture("sound_presss.png")
+        if (exitButton.click)
             exitButton.img = Texture("ex_press.png")
-        }
+
     }
     fun mainUpdate(){
         if (startButton.click)
@@ -96,13 +99,13 @@ class MainScreen(var myGame: MyGame):Screen, InputProcessor {
         name(batch)
     }
     fun name(batch: SpriteBatch){
-        var gen = FreeTypeFontGenerator(Gdx.files.internal("juice.ttf"))
+        var gen = FreeTypeFontGenerator(Gdx.files.internal("LuckiestGuy.ttf"))
         var p = FreeTypeFontGenerator.FreeTypeFontParameter()
         p.size = myGame.weight/15
         p.color = Color(1f, 0.5f, 0f, 1f)
         var font = gen.generateFont(p)
         var gl = GlyphLayout()
-        gl.setText(font, "Fix yourself")
+        gl.setText(font, "Fix y0urself")
         font.draw(batch, gl, myGame.weight/2 - gl.width/2, myGame.height- gl.height)
     }
 
@@ -128,7 +131,7 @@ class MainScreen(var myGame: MyGame):Screen, InputProcessor {
     }
 
     override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 
     override fun keyDown(keycode: Int): Boolean {

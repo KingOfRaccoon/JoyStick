@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.mygdx.game.MyGame
 import com.mygdx.game.tools.Any
@@ -14,6 +15,7 @@ import jdk.internal.util.xml.impl.Input
 
 class InventareScreen(var myGame: MyGame): Screen, InputProcessor {
     lateinit var button: Button
+    lateinit var backSprite: Sprite
     override fun hide() {
 
     }
@@ -25,7 +27,7 @@ class InventareScreen(var myGame: MyGame): Screen, InputProcessor {
     }
 
     override fun render(delta: Float) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         myGame.batch.begin()
         inventRender(myGame.batch)
@@ -49,6 +51,7 @@ class InventareScreen(var myGame: MyGame): Screen, InputProcessor {
     }
     fun inventRender(batch: SpriteBatch){
         Any.playersItem.forEach { it.draw(batch) }
+        backSprite.draw(batch)
 //        button.draw(batch)
     }
     fun loadItems(){
@@ -56,6 +59,9 @@ class InventareScreen(var myGame: MyGame): Screen, InputProcessor {
             Any.playersItem[i].position = Point2D((Gdx.graphics.width/(i+1.5)).toFloat(), Gdx.graphics.height/2.toFloat())
         }
 //        button = Button(Texture("back.png")).apply { position = Point2D(0f, Gdx.graphics.height - Texture("back.png").width.toFloat()) }
+        backSprite = Sprite(Texture("inventAll.png"))
+        backSprite.setSize(myGame.weight.toFloat(), myGame.height.toFloat())
+        backSprite.setPosition(0f, 0f)
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
@@ -80,7 +86,7 @@ class InventareScreen(var myGame: MyGame): Screen, InputProcessor {
     }
 
     override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 
     override fun keyDown(keycode: Int): Boolean {
@@ -89,7 +95,7 @@ class InventareScreen(var myGame: MyGame): Screen, InputProcessor {
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
     fun back(keycode: Int, isDownTouch: Boolean){
         if (keycode == com.badlogic.gdx.Input.Keys.BACK && isDownTouch){

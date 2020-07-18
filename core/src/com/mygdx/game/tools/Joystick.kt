@@ -3,6 +3,9 @@ package com.mygdx.game.tools
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import kotlin.math.abs
+import kotlin.math.acos
+import kotlin.math.asin
 import kotlin.math.sin
 
 class Joystick(imgCircle: Texture, imgStick: Texture,size : Float) {
@@ -37,7 +40,8 @@ class Joystick(imgCircle: Texture, imgStick: Texture,size : Float) {
         var dy = boundsCicrle.point.getY() - boundsStick.point.getY()
         var dist = Math.sqrt((dx*dx + dy*dy).toDouble()).toFloat()
         direction = Point2D(-(dx/dist), -(dy/dist))
-        angle = sin((dy/dist).toDouble())
+        angle = acos((abs(dy)/dist).toDouble())
+//        println(angle)
     }
     fun returnStick(){
         boundsStick.point.setPoint(boundsCicrle.point)
