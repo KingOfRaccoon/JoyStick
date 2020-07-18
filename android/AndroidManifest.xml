@@ -12,7 +12,7 @@
         android:theme="@style/GdxTheme"
         tools:targetApi="o">
         <activity android:name=".Launcher"
-            android:screenOrientation="landscape">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
