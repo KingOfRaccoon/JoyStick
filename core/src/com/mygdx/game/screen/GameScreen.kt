@@ -23,7 +23,7 @@ public class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     lateinit var game_joystic_distance :Point2D
     /**
      * создаю объект <game_joystic_distance>, который хранит разницу расстояния джостика и игрока
-     ** в дальнейшем используется для установки позиции джостика оттносительно игроку*/
+     * в дальнейшем используется для установки позиции джостика оттносительно игроку*/
 
     var items: MutableList<Item> = mutableListOf()
 
@@ -48,8 +48,8 @@ public class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
         player.move(joystick.direction)
         player.update()
 
-        joystick.point2D.setX(player.position.getX() - game_joystic_distance.getX())//=====
-        joystick.point2D.setY(player.position.getY() - game_joystic_distance.getY())//=====
+        joystick.point2D.setX(player.position.getX())//=====
+        joystick.point2D.setY(player.position.getY())//=====
         camera.position.x = player.position.getX() // камера следит
         camera.position.y = player.position.getY() // за игроком
 
