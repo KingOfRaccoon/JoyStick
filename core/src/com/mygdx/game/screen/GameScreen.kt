@@ -46,6 +46,7 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
         loadActors()
         Gdx.input.isCatchBackKey = true
         music.isLooping = true
+        myGame.batch.begin()
 //        dx = camera.position.x + joystick.point2D.getX()
 //        dy = camera.position.y + joystick.point2D.getY()
     }
@@ -53,9 +54,9 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         gameUpdate()
-        myGame.batch.begin()
+
         gameRender(myGame.batch)
-        myGame.batch.end()
+
     }
 
     override fun pause() {
@@ -71,7 +72,7 @@ class GameScreen(var myGame: MyGame) : Screen, InputProcessor{
     }
 
     override fun dispose() {
-        TODO("Not yet implemented")
+        myGame.batch.end()
     }
     fun loadActors(){
         Any.map.createMap()

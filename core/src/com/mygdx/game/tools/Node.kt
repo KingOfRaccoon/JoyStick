@@ -13,6 +13,10 @@ class Node(var g: Int = 0) {
     var circle = Circle(texture.width.toFloat(), position)
     var crashNodes : CrashNodes = CrashNodes.OK
     var time = 0f
+
+    val texture1 = Texture("neu_red.png")
+    val texture2 = Texture("neu_red.png")
+
     constructor(x:Float, y:Float, g: Int) : this() {
         this.x = x
         this.y = y
@@ -31,8 +35,8 @@ class Node(var g: Int = 0) {
     }
     fun getStatysImage(){
         when(crashNodes){
-            CrashNodes.WARNING -> texture = Texture("neu_red.png") // текстура для поврежденного нейрона
-            CrashNodes.CRASH -> texture = Texture("neu_red.png") // текстура для сломанного нейрона
+            CrashNodes.WARNING -> texture1 // текстура для поврежденного нейрона
+            CrashNodes.CRASH -> texture2 // текстура для сломанного нейрона
         }
     }
     fun draw(batch: SpriteBatch){
