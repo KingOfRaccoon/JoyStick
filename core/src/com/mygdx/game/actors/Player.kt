@@ -10,13 +10,13 @@ import sun.awt.image.GifImageDecoder
 
 class Player(texture: Texture, position: Point2D, health:Float):Actors(texture, position){
     var health = health
-    var radius = texture.height/2.toFloat()
+    var radius = texture.height*8.toFloat()
     var myItem = mutableListOf<Item>()
     override fun draw(batch: SpriteBatch) {
         setImade()
         var image = TextureRegion(img)
         batch.draw(image, position.getX(), position.getY(),
-                radius*8, radius*8)
+                radius/2, radius/2)
     }
 
     override fun update() {
