@@ -7,7 +7,6 @@ import kotlin.math.*
 
 class Line(var id1 : Node, var id2: Node) {
     var texture = Texture("track2.png")
-
     fun draw(batch: SpriteBatch){
         val startPoint = if(range(id1) < range(id2)) id1 else id2
 
@@ -24,7 +23,7 @@ class Line(var id1 : Node, var id2: Node) {
                 0f, 0f,
                 texture.width.toFloat(),
                 texture.height.toFloat(),
-                scale, 1f,
+                scale, 2f,
                 angle.toFloat())
     }
     fun range(node : Node) = sqrt(node.x * node.x + node.y * node.y)

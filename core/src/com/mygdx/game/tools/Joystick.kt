@@ -18,7 +18,6 @@ class Joystick(imgCircle: Texture, imgStick: Texture,size : Float) {
     var boundsStick  : Circle = Circle(radStick, point2D)
     var direction = Point2D(0f,0f)
     var pointer = -1
-    var angle = 0.0
 
     fun draw(batch: SpriteBatch){
         batch.draw(textureCircle, boundsCicrle.point.getX()-radCircle, boundsCicrle.point.getY()-radCircle, radCircle*2, radCircle*2)
@@ -40,8 +39,6 @@ class Joystick(imgCircle: Texture, imgStick: Texture,size : Float) {
         var dy = boundsCicrle.point.getY() - boundsStick.point.getY()
         var dist = Math.sqrt((dx*dx + dy*dy).toDouble()).toFloat()
         direction = Point2D(-(dx/dist), -(dy/dist))
-        angle = acos((abs(dy)/dist).toDouble())
-//        println(angle)
     }
     fun returnStick(){
         boundsStick.point.setPoint(boundsCicrle.point)

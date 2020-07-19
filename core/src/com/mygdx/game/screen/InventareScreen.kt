@@ -60,7 +60,7 @@ class InventareScreen(var myGame: MyGame): Screen, InputProcessor {
         }
 //        button = Button(Texture("back.png")).apply { position = Point2D(0f, Gdx.graphics.height - Texture("back.png").width.toFloat()) }
         backSprite = Sprite(Texture("inventAll.png"))
-        backSprite.setSize(myGame.weight.toFloat(), myGame.height.toFloat())
+        backSprite.setSize(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
         backSprite.setPosition(0f, 0f)
     }
 
